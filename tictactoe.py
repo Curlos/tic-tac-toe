@@ -74,6 +74,7 @@ def update_board(board, squares):
 
 
 def gamemode_player_vs_player(board, squares, all_x_pos, all_o_pos, all_winning_pos):
+    ''' Starts a game of tic-tac-toe between two human players. '''
     player_one = player_turn(
         board, squares, all_x_pos, '1', all_winning_pos)
     board = update_board(board, squares)
@@ -98,6 +99,7 @@ def gamemode_player_vs_player(board, squares, all_x_pos, all_o_pos, all_winning_
 
 
 def gamemode_player_vs_bot(board, squares, all_x_pos, all_o_pos, all_winning_pos):
+    ''' Starts a game of tic-tac-toe between a human player and a bot. '''
     player_one = player_turn(
         board, squares, all_x_pos, '1', all_winning_pos)
     board = update_board(board, squares)
@@ -121,6 +123,7 @@ def gamemode_player_vs_bot(board, squares, all_x_pos, all_o_pos, all_winning_pos
 
 
 def gamemode_bot_vs_bot(board, squares, all_x_pos, all_o_pos, all_winning_pos):
+    ''' Starts a game of tic-tac-toe between two bots. Each bot will take one second to choose a valid square. '''
     player_bot1 = bot_turn(
         board, squares, all_x_pos, '1', all_winning_pos)
     board = update_board(board, squares)
