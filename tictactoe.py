@@ -1,3 +1,6 @@
+from random import choice
+
+
 def player_turn(board, squares, all_pos, player_num, all_winning_pos):
     ''' Asks the player to enter a valid, empty square and adds it to the board. '''
     while True:
@@ -21,6 +24,21 @@ def player_turn(board, squares, all_pos, player_num, all_winning_pos):
         else:
             print(
                 'Square invalid, please enter a valid, empty square from the following list: [A0, A1, A2, B0, B1, B2, C0, C1, C2]')
+
+
+def ai_turn(board, squares, all_pos, all_winning_pos):
+    ''' Asks the player to enter a valid, empty square and adds it to the board. '''
+    print(board)
+    ai_square = choice(list(squares.keys()))
+
+    while True:
+        if squares[ai_square] != ' ':
+            ai_square = choice(list(squares.keys()))
+        else:
+            break
+    squares[ai_square] = 'O'
+    all_pos.append(ai_square)
+    return check_all_pos(all_winning_pos, all_pos, 'O')
 
 
 def check_all_pos(all_winning_pos, all_pos, letter):
@@ -72,6 +90,9 @@ def start():
     all_winning_pos.append(['A2', 'B2', 'C2'])
     all_winning_pos.append(['A2', 'B1', 'C0'])
 
+    game_type = input(
+            "Choose a game mode [Enter '1' or '2']:\n1. Player vs. Player\n2. Player vs. AI\n")
+
     while running:
         player_one = player_turn(
             board, squares, all_x_pos, '1', all_winning_pos)
@@ -85,15 +106,27 @@ def start():
 
         print(len(all_x_pos) + len(all_o_pos))
 
-        player_two = player_turn(
-            board, squares, all_o_pos, '2', all_winning_pos)
-        board = update_board(board, squares)
+        if(game_type == '1'):
+            player_two = player_turn(
+                board, squares, all_o_pos, '2', all_winning_pos)
+            board = update_board(board, squares)
 
-        # Returns true if the player has placed three X in positions where it can be crossed
-        if(player_two):
-            print(board)
-            print(f"Game over! Player two has won the game!")
-            break
+            # Returns true if the player has placed three X in positions where it can be crossed
+            if(player_two):
+                print(board)
+                print(f"Game over! Player two has won the game!")
+                break
+        elif(game_type == '2'):
+            player_ai = ai_turn(
+                board, squares, all_o_pos, all_winning_pos)
+            board = update_board(board, squares)
+
+            if(player_ai):
+                print(board)
+                print(f"Game over! Player AI has won the game!")
+                break
+        else:
+            print('Invalid game mode entered. Please try again.')
 
 
 def main():
